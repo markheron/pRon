@@ -13,7 +13,7 @@ oligo_names <- function(oligo_length) {
   
   oligo_nuc_names <- c("")
   for(not_used in 1:oligo_length) {
-    oligo_nuc_names <- unlist(lapply(oligo_nuc_names, function (x) paste(x, c('A','C','G','T'),sep='')))
+    oligo_nuc_names <- paste0(rep(oligo_nuc_names, each=4), c('A','C','G','T'))
   }
   return(oligo_nuc_names)
 }

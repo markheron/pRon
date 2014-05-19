@@ -10,7 +10,7 @@ get_genome_avg <- function(genome_dir, oligo_length) {
   
   oligo_counts <- rep(0, 4^oligo_length)
   
-  for(chr in dir(genome_dir)) {
+  for(chr in get_files(genome_dir)) {
     
     sequence_as_num <- fasta2num( readDNAStringSet(paste(genome_dir,chr,sep="")), oligo_length)
     chr_counts <- table(sequence_as_num[sequence_as_num > 0])
@@ -148,16 +148,20 @@ get_dyad_pos <- function(data_list, dyad_base="center", offset=73) {
   
   dyad_pos <- list()
   
+  to_ffdf_table <- function (x) {
+    return( as.ffdf(as.data.frame(table(x))) )
+  }
+  
   for(chr_name in names(data_list)) {
     
     if(dyad_base == "center") {
-      tmp <- as.ffdf(as.data.frame(table( floor((data_list[[chr_name]][,1] + data_list[[chr_name]][,2])/2) )))
+      tmp <- to_ffdf_table( floor((data_list[[chr_name]][,1] + data_list[[chr_name]][,2])/2) )
     } else if(dyad_base == "start") {
-      tmp <- as.ffdf(as.data.frame(table(data_list[[chr_name]][,1]+offset)))
+      tmp <- to_ffdf_table( data_list[[chr_name]][,1]+offset )
     } else if(dyad_base == "end") {
-      tmp <- as.ffdf(as.data.frame(table(data_list[[chr_name]][,2]-offset)))
+      tmp <- to_ffdf_table( data_list[[chr_name]][,2]-offset )
     } else if(dyad_base == "dinucleosome") {
-      tmp <- as.ffdf(as.data.frame(table( c(data_list[[chr_name]][,1]+offset, data_list[[chr_name]][,2]-offset))))
+      tmp <- to_ffdf_table( c(data_list[[chr_name]][,1]+offset, data_list[[chr_name]][,2]-offset) )
     }
     
     dyad_pos[[chr_name]] <- as.ff(matrix(c(as.numeric(as.character(tmp[,1])), tmp[,2]), ncol=2))

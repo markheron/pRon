@@ -1,11 +1,12 @@
 Package: pRon
 Type: Package
-Title: pretty representations of oligo-nucleotides
+Title: pretty Representations of oligo-nucleotides
 Version: 0.1
 Date: 2014-03-03
 Author: Mark Heron
 Maintainer: Mark Heron <heron@genzentrum.lmu.de>
-Description: ...
+Description: A selection functions to help handle oligo-nucleotides (mers),
+    including creation frequency/energy profile figures.
 License: GPL-3
 Imports:
     Biostrings,

@@ -1,19 +1,18 @@
 
 
-#' plotGenomicCutouts
-#' 
-#' @export
-#' 
-plotGenomicCutouts <- function(chr, pos, strand, size, order, genome_folder) {
-  
-  fasta <- cut_out_fasta_multiple(chr, pos, strand, size, order, genome_folder)
-  
-  seqnum <- fasta2num(fasta, oligo_length=order+1)
-  
-  freqs <- num2freq(seqnum, order+1)
-  
-  plotOligoFreqs(freqs, x_pos=-size:size)
-}
+# #' plotGenomicCutouts
+# #' 
+# #' 
+# plotGenomicCutouts <- function(chr, pos, strand, size, order, genome_folder) {
+#   
+#   fasta <- cut_out_fasta_multiple(chr, pos, strand, size, order, genome_folder)
+#   
+#   seqnum <- fasta2num(fasta, oligo_length=order+1)
+#   
+#   freqs <- num2freq(seqnum, order+1)
+#   
+#   plotOligoFreqs(freqs, x_pos=-size:size)
+# }
 
 
 

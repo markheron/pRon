@@ -1,0 +1,23 @@
+\name{fasta2num}
+\alias{fasta2num}
+\title{fasta2num}
+\usage{
+fasta2num(fastas, oligo_length)
+}
+\arguments{
+  \item{fastas}{(DNAStringSet) of same length fasta
+  sequences that should be converted}
+
+  \item{oligo_length}{(numeric) length of the
+  oligo-nucleotides to use.}
+}
+\value{
+matrix of numeric representation of the fastas
+}
+\description{
+Transforms a DNAStringSet with equal length objects into a
+matrix of numeric representation of the oligo-nucleotides.
+Any oligo-nucleotide with a letter differing from A,C,G,T
+is represented as **NA**
+}
+

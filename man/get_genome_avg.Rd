@@ -1,0 +1,20 @@
+\name{get_genome_avg}
+\alias{get_genome_avg}
+\title{get_genome_avg}
+\usage{
+get_genome_avg(genome_dir, oligo_length)
+}
+\arguments{
+  \item{genome_dir}{the directory where the chromosome
+  fasta files can be found}
+
+  \item{oligo_length}{(numeric) length of the
+  oligo-nucleotides to cound the average frequencies for}
+}
+\value{
+the frequencies of the different oligomers
+}
+\description{
+get_genome_avg
+}
+

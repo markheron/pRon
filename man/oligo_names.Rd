@@ -1,0 +1,21 @@
+\name{oligo_names}
+\alias{oligo_names}
+\title{create oligo-nucleotide names}
+\usage{
+oligo_names(oligo_length)
+}
+\arguments{
+  \item{oligo_length}{(numeric) length of the
+  oligo-nucleotides to use.}
+}
+\value{
+oligo-nucleotide name vector (character)
+}
+\description{
+Creates an array with all possible oligomers of the length
+\code{mer_length}, sorted alphabetically.
+}
+\examples{
+oligo_names(2)
+}
+

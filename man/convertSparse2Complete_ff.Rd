@@ -1,0 +1,24 @@
+\name{convertSparse2Complete_ff}
+\alias{convertSparse2Complete_ff}
+\title{convertSparse2Complete_ff}
+\usage{
+convertSparse2Complete_ff(sparse, lengths)
+}
+\arguments{
+  \item{sparse}{list of sparse representation matricies}
+
+  \item{lengths}{list of chromosome lengths, names must
+  match those of sparse}
+}
+\value{
+list of ff vectors with complete representation of genomic
+tags
+}
+\description{
+Converts sparse representation to complete representation
+as ff vectors of genomic tags.
+}
+\author{
+Mark Heron
+}
+

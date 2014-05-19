@@ -1,0 +1,35 @@
+\name{cut_out_fasta_multiple}
+\alias{cut_out_fasta_multiple}
+\title{cut_out_fasta_multiple}
+\usage{
+cut_out_fasta_multiple(chr, pos, strand, size, order, genome_dir)
+}
+\arguments{
+  \item{chr}{vector of chromosomes (DNAString) names where
+  the sequences should be cutout from}
+
+  \item{pos}{vector of central position for cuting out the
+  region}
+
+  \item{strand}{vector of "+"/"-" to specify if the forward
+  or the reverse complement sequence shall be used}
+
+  \item{size}{region size before and after the positions to
+  cut out}
+
+  \item{order}{what oligonucleotide order will later be
+  used (to extend the cut region for symetry)}
+
+  \item{genome_dir}{the directory where the chromosome
+  fasta files can be found}
+}
+\value{
+DNAStringSet of cut out fragment
+}
+\description{
+Cut's out multiple regions from a genome (DNAStringSet).
+}
+\author{
+Mark Heron
+}
+

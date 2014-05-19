@@ -1,0 +1,25 @@
+\name{cut_out_fasta_single}
+\alias{cut_out_fasta_single}
+\title{cut_out_fasta_single}
+\usage{
+cut_out_fasta_single(fasta, start, end, strand)
+}
+\arguments{
+  \item{fasta}{DNAString to cut out from}
+
+  \item{start}{of region to cut out}
+
+  \item{end}{of region to cut out}
+
+  \item{strand}{cut out forward or reverse complement}
+}
+\value{
+DNAString of cut out fragment
+}
+\description{
+Cut's out single region from a single DNAString.
+}
+\author{
+Mark Heron
+}
+

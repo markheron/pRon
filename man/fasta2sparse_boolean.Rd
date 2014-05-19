@@ -1,0 +1,22 @@
+\name{fasta2sparse_boolean}
+\alias{fasta2sparse_boolean}
+\title{fasta2sparse_boolean}
+\usage{
+fasta2sparse_boolean(fasta, oligo_length)
+}
+\arguments{
+  \item{fasta}{DNAString}
+
+  \item{oligo_length}{oligonucleotide length to code the
+  sequence in}
+}
+\value{
+sparse representation matrix of the DNAString
+}
+\description{
+Creates sparse coding matrix of a fasta sequence.
+}
+\author{
+Mark Heron
+}
+

@@ -1,6 +1,6 @@
 ##' Pretty representations of oligo-nucleotides
 ##' 
-##' A selection of functions to ease the work with and plotting of oligo-nucleotides (mers).
+##' A selection functions to help handle oligo-nucleotides (mers), including creation frequency/energy profile figures.
 ##' 
 ##' @name pRon-package
 ##' @author Mark Heron
