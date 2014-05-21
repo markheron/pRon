@@ -1,8 +1,8 @@
 
 
-# #' plotGenomicCutouts
-# #' 
-# #' 
+# plotGenomicCutouts
+# 
+# 
 # plotGenomicCutouts <- function(chr, pos, strand, size, order, genome_folder) {
 #   
 #   fasta <- cut_out_fasta_multiple(chr, pos, strand, size, order, genome_folder)
@@ -18,12 +18,21 @@
 
 #' plotOligoFreqs
 #' 
+#' plots oligonucleotide frequencies over a region as lines
+#' 
 #' @export
 #' 
-plotOligoFreqs <- function(freqs, x_pos=NULL, main="", ylim=NULL, legend_nrow=1) {
+#' @param freqs (numeric matrix) oligonucleotide frequencies
+#' @param x_pos (numeric vector) x axis positions
+#' @param ylim (numeric tuple) range of the y axis
+#' @param xlab (character) x axis label, defaults to: \"distance to position of interest\"
+#' @param legend_nrow (integer) over how many rows should the legend be split
+#' @param ... further parameters for \code{\link{plot}}
+#' 
+plotOligoFreqs <- function(freqs, x_pos=NULL, ylim=NULL, xlab="distance to position of interest", legend_nrow=1, ...) {
   
   if(all(is.nan(freqs))) {
-    epsilons[] <- 0
+    freqs[] <- 0
   }
   
   if(length(ylim) == 0) {
@@ -31,16 +40,16 @@ plotOligoFreqs <- function(freqs, x_pos=NULL, main="", ylim=NULL, legend_nrow=1)
   }
   
   if(length(x_pos) == 0) {
-    x_pos <- 1:dim(epsilons)[2]
+    x_pos <- 1:ncol(freqs)
   }
   
-  colors <- distinctive_colors(dim(freqs)[1])
+  colors <- distinctive_colors(nrow(freqs))
   
-  plot(x_pos ,freqs[1,],typ='l',col=colors[1],ylim=ylim,xlab="", ylab="freq",xaxt='n', main=main)
+  plot(x_pos ,freqs[1,],typ='l',col=colors[1],ylim=ylim,xlab="", ylab="freq",xaxt='n', ...)
   axis(side=1, pretty(x_pos, 10), mgp=c(3.5,1.5,0))
-  title(xlab="distance to position of interest", mgp=c(4.5,1.5,0))
-  for(i in 2:dim(freqs)[1]) {
+  title(xlab=xlab, mgp=c(4.5,1.5,0))
+  for(i in 2:nrow(freqs)) {
     lines(x_pos ,freqs[i,],typ='l',col=colors[i])
   }
-  legend("top",legend=rownames(freqs),fill=colors, ncol=dim(freqs)[1]/legend_nrow, cex=min(par('cex'), 6/(dim(freqs)[1]^(0.25))^2)) #,horiz=TRUE)
+  legend("top",legend=rownames(freqs),fill=colors, ncol=nrow(freqs)/legend_nrow, cex=min(par('cex'), 6/(nrow(freqs)^(0.25))^2)) #,horiz=TRUE)
 }

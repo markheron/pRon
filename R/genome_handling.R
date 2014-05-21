@@ -135,53 +135,21 @@ convertSparse2Complete_ff <- function(sparse, lengths) {
 
 
 
-##' get_dyad_pos
+##' getRunningWindowCG
 ##'
-##' Extracts the dyad positions in the chosen way from a table with mapped fragment start and ends
+##' Computes a running window cg\% for a DNAStringSet
 ##' @export
-##' @param data_list list of mapped fragments for each chromosome
-##' @param dyad_base based on what position should the dyad position be calculated
-##' @param offset offset if the dyad position isn't calculated from the center
-##' @return list of ff matricies with dyad positions and intensity
+##' @param fastas (DNAStringSet) for which to calculate the running window cg\%
+##' @param half_window_size how much to extend the window in either direction
+##' @return list of ff vectors with running cg\%
 ##' @author Mark Heron
-get_dyad_pos <- function(data_list, dyad_base="center", offset=73) {
+getRunningWindowCG <- function(fastas, half_window_size=73) {
   
-  dyad_pos <- list()
-  
-  to_ffdf_table <- function (x) {
-    return( as.ffdf(as.data.frame(table(x))) )
+  genome_list <- list()
+  for(chr in names(fastas)) {
+    seqnum <- fasta2num(fastas[chr],1)
+    cg <- as.numeric((seqnum == 2) | (seqnum == 3))
+    genome_list[[chr]] <-  as.ff(smear(cg, from=-half_window_size, to=half_window_size)/(2*half_window_size+1))
   }
-  
-  for(chr_name in names(data_list)) {
-    
-    if(dyad_base == "center") {
-      tmp <- to_ffdf_table( floor((data_list[[chr_name]][,1] + data_list[[chr_name]][,2])/2) )
-    } else if(dyad_base == "start") {
-      tmp <- to_ffdf_table( data_list[[chr_name]][,1]+offset )
-    } else if(dyad_base == "end") {
-      tmp <- to_ffdf_table( data_list[[chr_name]][,2]-offset )
-    } else if(dyad_base == "dinucleosome") {
-      tmp <- to_ffdf_table( c(data_list[[chr_name]][,1]+offset, data_list[[chr_name]][,2]-offset) )
-    }
-    
-    dyad_pos[[chr_name]] <- as.ff(matrix(c(as.numeric(as.character(tmp[,1])), tmp[,2]), ncol=2))
-  }
-  return(dyad_pos)
-}
-
-
-
-##' adjust_X_chr
-##'
-##' Adjusts lower X chromosome counts due cells being male or a mixture of male/female.
-##' @export
-##' @param ff_list list of ff objects each representing data of one chromosome
-##' @param X_chr name of the X chromosome in ff_list
-##' @param Xfactor factor by which the counts should be adjusted (2 for male celllines, 4/3 for male/female mixtures)
-##' @return adjusted ff_list
-##' @author Mark Heron
-adjust_X_chr <- function(ff_list, X_chr, Xfactor) {
-  
-  ff_list[[X_chr]][,2] <- ff_list[[X_chr]][,2]*Xfactor
-  return(ff_list)
+  invisible(genome_list)
 }

@@ -13,3 +13,7 @@ Imports:
     maRs,
     ff,
     ffbase
+Suggests:
+    knitr,
+    microbenchmark
+VignetteBuilder: knitr

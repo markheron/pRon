@@ -1,0 +1,23 @@
+\name{getRunningWindowCG}
+\alias{getRunningWindowCG}
+\title{getRunningWindowCG}
+\usage{
+getRunningWindowCG(fastas, half_window_size = 73)
+}
+\arguments{
+  \item{fastas}{(DNAStringSet) for which to calculate the
+  running window cg\%}
+
+  \item{half_window_size}{how much to extend the window in
+  either direction}
+}
+\value{
+list of ff vectors with running cg\%
+}
+\description{
+Computes a running window cg\% for a DNAStringSet
+}
+\author{
+Mark Heron
+}
+

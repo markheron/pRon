@@ -1,0 +1,59 @@
+
+Benchmarks: pROn
+========================================================
+
+```{r echo=FALSE}
+library(Biostrings)
+library(maRs)
+library(microbenchmark)
+```
+
+
+Several benchmarks to check which way of implementing the functions is faster.
+
+
+oligo_names
+--------------------------------------------------------
+```{r}
+oligo_nuc_names <- c("AA", "AC", "AG", "AT", "CA", "CC", "CG", "CT", "GA", "GC", 
+"GG", "GT", "TA", "TC", "TG", "TT")
+tmp <- microbenchmark(
+  LAPPLY=unlist(lapply(oligo_nuc_names, function (x) paste0(x, c('A','C','G','T')))),
+  SAPPLY=sapply(oligo_nuc_names, function (x) paste0(x, c('A','C','G','T'))),
+  REP=paste0(rep(oligo_nuc_names,each=4), c('A','C','G','T')),
+  times=1000)
+boxplot(tmp, unit="ms", log=TRUE, main="oligo_names")
+```
+
+fasta2num
+--------------------------------------------------------
+```{r}
+
+base2num <- c(1:4,NA)
+names(base2num) <- c("A","C","G","T", "N")
+
+fasta_seqs <- DNAStringSet(rep(paste0(sample(c("A","C","G","T"),replace=TRUE,300000),collapse=""),10))
+tmp <-  microbenchmark(
+  lFISV_rowSums_vecmult={tmp <- sapply(fasta_seqs, function (x) rowSums(letterFrequencyInSlidingView(x, 1, c("A","C","G","T"))%*%(1:4))); tmp[tmp == 0] <- NA},
+  lFISV_colSums_t={tmp <- sapply(fasta_seqs, function (x) colSums(t(letterFrequencyInSlidingView(x, 1, c("A","C","G","T")))*(1:4))); tmp[tmp == 0] <- NA},
+  strsplit=sapply(fasta_seqs, function (fasta) base2num[strsplit(as.character(fasta),"")[[1]]]),
+  times=10)
+boxplot(tmp, unit="ms", log=TRUE, main="fasta2num few long seqs")
+
+fasta_seqs <- DNAStringSet(rep(paste0(sample(c("A","C","G","T"),replace=TRUE,3000),collapse=""),10))
+tmp <-  microbenchmark(
+  lFISV_rowSums_vecmult={tmp <- sapply(fasta_seqs, function (x) rowSums(letterFrequencyInSlidingView(x, 1, c("A","C","G","T"))%*%(1:4))); tmp[tmp == 0] <- NA},
+  lFISV_colSums_t={tmp <- sapply(fasta_seqs, function (x) colSums(t(letterFrequencyInSlidingView(x, 1, c("A","C","G","T")))*(1:4))); tmp[tmp == 0] <- NA},
+  strsplit=sapply(fasta_seqs, function (fasta) base2num[strsplit(as.character(fasta),"")[[1]]]),
+  times=1000)
+boxplot(tmp, unit="ms", log=TRUE, main="fasta2num few short seqs")
+
+fasta_seqs <- DNAStringSet(rep(paste0(sample(c("A","C","G","T"),replace=TRUE,3000),collapse=""),1000))
+tmp <-  microbenchmark(
+  lFISV_rowSums_vecmult={tmp <- sapply(fasta_seqs, function (x) rowSums(letterFrequencyInSlidingView(x, 1, c("A","C","G","T"))%*%(1:4))); tmp[tmp == 0] <- NA},
+  lFISV_colSums_t={tmp <- sapply(fasta_seqs, function (x) colSums(t(letterFrequencyInSlidingView(x, 1, c("A","C","G","T")))*(1:4))); tmp[tmp == 0] <- NA},
+  strsplit=sapply(fasta_seqs, function (fasta) base2num[strsplit(as.character(fasta),"")[[1]]]),
+  times=10)
+boxplot(tmp, unit="ms", log=TRUE, main="fasta2num many short seqs")
+```
+

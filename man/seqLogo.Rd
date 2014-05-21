@@ -1,0 +1,30 @@
+\name{seqLogo}
+\alias{seqLogo}
+\title{seqLogo}
+\usage{
+seqLogo(pwm, ic.scale = TRUE, xaxis = TRUE, yaxis = TRUE,
+  xfontsize = 15, yfontsize = 15, region = c(0, 0, 1, 1))
+}
+\arguments{
+  \item{pwm}{position weight matrix to create a Sequence
+  Logo from}
+
+  \item{ic.scale}{(logical) should positions be scaled by
+  informatic content}
+
+  \item{xaxis}{(logical) should an x-axis be drawn}
+
+  \item{yaxis}{(logical) should an y-axis be drawn}
+
+  \item{xfontsize}{(integer) size for x-axis text}
+
+  \item{yfontsize}{(integer) size for y-axis text}
+
+  \item{region}{in which to plot the figure, set by four
+  margin values, set to \code{par("mar")} for default full
+  plot}
+}
+\description{
+plot a sequence logo
+}
+
