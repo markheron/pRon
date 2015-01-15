@@ -17,7 +17,7 @@ fasta2sparse_boolean <- function(fasta, oligo_length) {
   for(i in 1:nrow(fasta_sparse)) {
     fasta_sparse[i,] <- fasta_num==i
   }
-  chr_sparse[is.na(chr_sparse)] <- FALSE
+  #fasta_sparse[is.na(fasta_sparse)] <- FALSE
   
   return( fasta_sparse )
 }

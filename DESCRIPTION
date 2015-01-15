@@ -10,9 +10,9 @@ Description: A selection functions to help handle oligo-nucleotides (mers),
 License: GPL-3
 Imports:
     Biostrings,
-    maRs,
     ff,
-    ffbase
+    ffbase,
+    maRs
 Suggests:
     knitr,
     microbenchmark

@@ -7,7 +7,7 @@
 ##' @docType package
 ##' 
 ##' @import Biostrings
-##' @import maRs
 ##' @import ff
 ##' @import ffbase
+##' @import maRs
 NULL

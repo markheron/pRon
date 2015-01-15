@@ -47,9 +47,9 @@ plotOligoFreqs <- function(freqs, x_pos=NULL, ylim=NULL, xlab="distance to posit
   
   plot(x_pos ,freqs[1,],typ='l',col=colors[1],ylim=ylim,xlab="", ylab="freq",xaxt='n', ...)
   axis(side=1, pretty(x_pos, 10), mgp=c(3.5,1.5,0))
-  title(xlab=xlab, mgp=c(4.5,1.5,0))
+  title(xlab=xlab, mgp=c(3.5,1.5,0))
   for(i in 2:nrow(freqs)) {
-    lines(x_pos ,freqs[i,],typ='l',col=colors[i])
+    lines(x_pos ,freqs[i,],typ='l',col=colors[i], ...)
   }
   legend("top",legend=rownames(freqs),fill=colors, ncol=nrow(freqs)/legend_nrow, cex=min(par('cex'), 6/(nrow(freqs)^(0.25))^2)) #,horiz=TRUE)
 }

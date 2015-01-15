@@ -222,7 +222,7 @@ addLetter <- function(letters,which,x.pos,y.pos,ht,wt){
 ##' 
 ##' @param pwm position weight matrix to create a Sequence Logo from
 ##' @param ic.scale (logical) should positions be scaled by informatic content
-##' @param xaxis (logical) should an x-axis be drawn
+##' @param xaxis (logical) should an x-axis be drawn or vector of labels for the xaxis (must be same length as pwm)
 ##' @param yaxis (logical) should an y-axis be drawn
 ##' @param xfontsize (integer) size for x-axis text
 ##' @param yfontsize (integer) size for y-axis text
@@ -284,6 +284,9 @@ seqLogo <- function(pwm, ic.scale=TRUE, xaxis=TRUE, yaxis=TRUE, xfontsize=15, yf
   grid.polygon(x=unit(letters$x,"native"), y=unit(letters$y,"native"),
                id=letters$id,
                gp=gpar(fill=letters$fill,col=letters$col,lwd=1))
+  if(length(xaxis) == ncol(pwm) && length(xaxis) > 1) {
+    grid.xaxis(at=seq(0.5,ncol(pwm)-0.5),label=xaxis, gp=gpar(fontsize=xfontsize))
+  }
   if (xaxis){
     grid.xaxis(at=seq(0.5,ncol(pwm)-0.5),label=1:ncol(pwm), gp=gpar(fontsize=xfontsize))
     #grid.text("Position",y=unit(-3,"lines"), gp=gpar(fontsize=xfontsize))
