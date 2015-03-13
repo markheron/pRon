@@ -89,13 +89,13 @@ cut_out_fasta_single <- function(fasta, start, end, strand) {
 
 ##' cut_out_fasta_multiple_from_one_chr
 ##'
-##' Cut's out multiple regions from a single DNAString (i.e. typically chromosome).
+##' Cut's out multiple regions from a single DNAString(Set) (i.e. typically chromosome).
 ##' @export
 ##' @param pos vector of central position for cuting out the region
 ##' @param strand vector of "+"/"-" to specify if the forward or the reverse complement sequence shall be used
 ##' @param size region size before and after the positions to cut out
 ##' @param order what oligonucleotide order will later be used (to extend the cut region for symetry)
-##' @param chr_fasta DNAString of the chromosome from which to cut out the regions
+##' @param chr_fasta DNAString(Set) of the chromosome from which to cut out the regions
 ##' @return DNAStringSet of cut out fragment
 ##' @author Mark Heron
 cut_out_fasta_multiple_from_one_chr <- function(pos, strand, size, order, chr_fasta) {
@@ -104,7 +104,7 @@ cut_out_fasta_multiple_from_one_chr <- function(pos, strand, size, order, chr_fa
   
   for(i in 1:length(seqs)) {
     
-    seqs <- subseq(rep(chr_fasta, length(pos)), start=pos-size -((strand=="-")*order), end=pos+size +((strand=="+")*order))
+    seqs <- subseq(rep(DNAStringSet(chr_fasta), length(pos)), start=pos-size -((strand=="-")*order), end=pos+size +((strand=="+")*order))
     
   }
   names(seqs) <- ""

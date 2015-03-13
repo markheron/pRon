@@ -11,7 +11,7 @@ seqLogo(pwm, ic.scale = TRUE, xaxis = TRUE, yaxis = TRUE,
 
 \item{ic.scale}{(logical) should positions be scaled by informatic content}
 
-\item{xaxis}{(logical) should an x-axis be drawn}
+\item{xaxis}{(logical) should an x-axis be drawn or vector of labels for the xaxis (must be same length as pwm)}
 
 \item{yaxis}{(logical) should an y-axis be drawn}
 
