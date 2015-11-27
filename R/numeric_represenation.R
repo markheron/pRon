@@ -10,15 +10,27 @@
 #' @param oligo_length (numeric) length of the oligo-nucleotides to use.
 #' @return matrix of numeric representation of the fastas
 #' 
-fasta2num <- function (fastas, oligo_length) {
+fasta2num <- function (fastas, oligo_length, method="lookupTable") {
   
   # could use chartr instead of this, but I have to strsplit them anyway, so this probably has similar speed
+  base2num <- c("A"=1, "C"=2, "G"=3, "T"=4, "N"=NA)
   
-#   base2num <- c(1:4,NA)
-#   names(base2num) <- c("A","C","G","T", "N")
-#   seqnum_zero <- sapply(fastas, function (fasta) base2num[strsplit(as.character(fasta),"")[[1]]]) # next line implementation is faster, see benchmark
+  if(method == "slidingView") {
+    seqnum_zero <- sapply(fastas, function (x) colSums(t(letterFrequencyInSlidingView(x, 1, c("A","C","G","T")))*(1:4)))
+  } else if (method == "lookupTable") { # previous line implementation is faster, see benchmark  (on human sized fasta's this seems faster and has less memory footprint)
+    seqnum_zero <- sapply(fastas, function (fasta) base2num[strsplit(as.character(fasta),"")[[1]]])
+  } else if (method == "memoryLimited") {
+      
+    seqnum_zero <- sapply(fastas, function (fasta) {
+      positions <- c( seq(1,length(fasta),by=10000000),length(fasta)+1)
+      tmp <- integer(length(fasta))
+      for( i in 1:(length(positions)-1)) {
+        tmp[positions[i]:(positions[i+1]-1)] <- base2num[strsplit(as.character(substr(fasta,positions[i], positions[i+1]-1)),"")[[1]]]
+      }
+      return( tmp )
+    })
+  }
 
-  seqnum_zero <- sapply(fastas, function (x) colSums(t(letterFrequencyInSlidingView(x, 1, c("A","C","G","T")))*(1:4)))
   seqnum_zero[seqnum_zero == 0] <- NA
   
   seqnum_higher <- seqnum_zero
@@ -55,7 +67,7 @@ num2freq <- function(seqnum, oligo_length) {
 #' Calculates the weighted mere frequencies given a oligonucleotide-coded representation matrix
 #' @export
 #' @param seqnum (numeric matrix) oligo-nucleotide-coded representation of fasta sequences
-#' @param weights of the diferent fasta sequences
+#' @param weights of the different fasta sequences
 #' @param oligo_length (integer) length of the oligonucleotide-coding used (order+1)
 #' @return matrix of weighted oligonucleotide frequencies
 #' 

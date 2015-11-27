@@ -7,20 +7,19 @@
 ## author Mark Heron
 NULL
 
-####################################################
-## r ##
-####################################################
 
-## get information content profile from PWM
-pwm2ic<-function(pwm) {
-  npos<-ncol(pwm)
-  ic<-numeric(length=npos)
-  for (i in 1:npos) {
-    ic[i]<-2 + sum(sapply(pwm[, i], function(x) {
-      if (x > 0) { x*log2(x) } else { 0 }
-    }))
-  }
-  ic
+## get information content per position fpr pem
+pwm2ic <- function(pwm) {
+  
+  ic <- 2 + colSums( pwm*log2(pwm), na.rm=TRUE) #na.rm=TRUE handles the case of 0 counts
+  return(ic)
+}
+
+## get information gain per position fpr pem
+pwm2ig <- function(pwm, bg) {
+  
+  rc <- colSums( pwm*log2(pwm/bg), na.rm=TRUE) #na.rm=TRUE handles the case of 0 counts
+  return(rc)
 }
 
 ######################
@@ -221,63 +220,98 @@ addLetter <- function(letters,which,x.pos,y.pos,ht,wt){
 ##' @export
 ##' 
 ##' @param pwm position weight matrix to create a Sequence Logo from
-##' @param ic.scale (logical) should positions be scaled by informatic content
+##' @param ytype (character) the type of y-axis to be used "information" (or "ic", "content") for information content (default); "relative" (or "gain") for information gain; "probabilities" (or anything else) for probabilities
 ##' @param xaxis (logical) should an x-axis be drawn or vector of labels for the xaxis (must be same length as pwm)
 ##' @param yaxis (logical) should an y-axis be drawn
 ##' @param xfontsize (integer) size for x-axis text
 ##' @param yfontsize (integer) size for y-axis text
 ##' @param region in which to plot the figure, set by four margin values, set to \code{par("mar")} for default full plot
 ##' 
+##' @examples
+##' pwm <- rbind( A=c( 0,  0, 15,  5,  5,  1, 0.1),
+##'               C=c(10,  0,  0,  5,  5,  2, 0.1),
+##'               G=c(10,  0,  5,  0,  5,  3, 0.1),
+##'               T=c( 0, 20,  0, 10,  5, 14,19.7)) /20
+##'               
+##' seqLogo(pwm, region=par("mar"))
+##' 
 ##' @import grid
-seqLogo <- function(pwm, ic.scale=TRUE, xaxis=TRUE, yaxis=TRUE, xfontsize=15, yfontsize=15, region=c(0,0,1,1)){
+seqLogo <- function(pwm, background=c("A"=0.25,"C"=0.25,"G"=0.25,"T"=0.25), ytype="information", xaxis=TRUE, yaxis=TRUE, ylim=NULL, xlab="Position", xfontsize=15, yfontsize=15, region=c(0,0,1,1), ...){
   
   if (class(pwm) == "pwm"){
     pwm <- pwm@pwm
   }else if (class(pwm) == "data.frame"){
     pwm <- as.matrix(pwm)
   }else if (class(pwm) != "matrix"){
-    stop("pwm must be of class matrix or data.frame")
+    stop("pwm must be of class pwm, matrix or data.frame")
   }
   
-  if (any(abs(1 - apply(pwm,2,sum)) > 0.01))
+  if (any(abs(1 - colSums(pwm)) > 0.01)) {
     stop("Columns of PWM must add up to 1.0")
+  }
   
+  if (abs(1 - sum(background)) > 0.01) {
+    stop("background must add up to 1.0")
+  }
   
   chars <- c("A","C","G","T")
   letters <- list(x=NULL,y=NULL,id=NULL,fill=NULL)
-  npos <- ncol(pwm)
   
-  
-  if (ic.scale){
-    ylim <- 2
+  if (ytype == "information" || ytype == "ic" || ytype == "content") {
+    if(length(ylim) == 0) {
+      ylim <- c(0,2)
+    }
     ylab <- "Information content"
     facs <- pwm2ic(pwm)
-  }else{
-    ylim <- 1
+  } else if (ytype == "relative" || ytype == "gain") {
+    if(length(ylim) == 0) {
+      ylim <- c(0,2)
+    }
+    ylab <- "Information gain"
+    facs <- pwm2ig(pwm, background)
+  } else {
+    if(length(ylim) == 0) {
+      ylim <- c(0,1)
+    }
     ylab <- "Probability"
-    facs <- rep(1, npos)
+    facs <- rep(1,  ncol(pwm))
   }
   
   wt <- 1
+  white_space <- 0.01
+  
   x.pos <- 0
-  for (j in 1:npos){
+  for (j in 1: ncol(pwm)){
     
-    column <- pwm[,j]
-    hts <- 0.95*column*facs[j]
+    hts <- pwm[,j]*facs[j]
     letterOrder <- order(hts)
     
     y.pos <- 0
     for (i in 1:4){
       letter <- chars[letterOrder[i]]
       ht <- hts[letterOrder[i]]
-      if (ht>0) letters <- addLetter(letters,letter,x.pos,y.pos,ht,wt)
-      y.pos <- y.pos + ht + 0.01
+      if (ht > 0) {
+        if( (y.pos > 0) && (ht > white_space) ) {
+          if(ht < 3*white_space) {
+            y.pos <- y.pos + ht/3
+            ht <- ht - ht/3
+            letters <- addLetter(letters,letter,x.pos,y.pos,ht,wt)
+          } else {
+            y.pos <- y.pos + white_space
+            ht <- ht - white_space
+            letters <- addLetter(letters,letter,x.pos,y.pos,ht,wt)
+          }
+        } else {
+          letters <- addLetter(letters,letter,x.pos,y.pos,ht,wt)
+        }
+      }
+      y.pos <- y.pos + ht
     }
     x.pos <- x.pos + wt
   }
   
-  pushViewport(plotViewport(region))
-  pushViewport(dataViewport(0:ncol(pwm),0:ylim,name="vp1"))
+  pushViewport(plotViewport(region, ...))
+  pushViewport(dataViewport(xscale=c(0,ncol(pwm)),yscale=ylim,name="vp1", ...))
   
   grid.polygon(x=unit(c(0,ncol(pwm)+1,ncol(pwm)+1,0),"native"), y=unit(c(0,0,2,2),"native"),
                gp=gpar(fill="transparent",col="transparent"))
@@ -286,10 +320,10 @@ seqLogo <- function(pwm, ic.scale=TRUE, xaxis=TRUE, yaxis=TRUE, xfontsize=15, yf
                gp=gpar(fill=letters$fill,col=letters$col,lwd=1))
   if(length(xaxis) == ncol(pwm) && length(xaxis) > 1) {
     grid.xaxis(at=seq(0.5,ncol(pwm)-0.5),label=xaxis, gp=gpar(fontsize=xfontsize))
-  }
-  if (xaxis){
+    grid.text(xlab,y=unit(-3,"lines"), gp=gpar(fontsize=xfontsize))
+  } else if (isTRUE(xaxis)) {
     grid.xaxis(at=seq(0.5,ncol(pwm)-0.5),label=1:ncol(pwm), gp=gpar(fontsize=xfontsize))
-    #grid.text("Position",y=unit(-3,"lines"), gp=gpar(fontsize=xfontsize))
+    grid.text(xlab,y=unit(-3,"lines"), gp=gpar(fontsize=xfontsize))
   }
   if (yaxis){
     grid.yaxis(gp=gpar(fontsize=yfontsize))
@@ -301,14 +335,8 @@ seqLogo <- function(pwm, ic.scale=TRUE, xaxis=TRUE, yaxis=TRUE, xfontsize=15, yf
 }
 
 revComp <- function(pwm){
-  npos<-ncol(pwm)
-  rev<-pwm
-  for (i in 1:npos) {
-    for (j in 1:4){
-      rev[j,i] <- pwm[4-j+1, npos-i+1]
-      #rev[j,i] <- 0
-    }
-  }
-  rev
+  reverse_pwm <- pwm # for correct col and row names
+  reverse_pwm[] <- pwm[nrow(pwm):1, ncol(pwm):1]
+  return(reverse_pwm)
 }
 
