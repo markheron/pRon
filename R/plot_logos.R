@@ -8,14 +8,14 @@
 NULL
 
 
-## get information content per position fpr pem
+## get information content per position for pem
 pwm2ic <- function(pwm) {
   
   ic <- 2 + colSums( pwm*log2(pwm), na.rm=TRUE) #na.rm=TRUE handles the case of 0 counts
   return(ic)
 }
 
-## get information gain per position fpr pem
+## get information gain per position for pem
 pwm2ig <- function(pwm, bg) {
   
   rc <- colSums( pwm*log2(pwm/bg), na.rm=TRUE) #na.rm=TRUE handles the case of 0 counts

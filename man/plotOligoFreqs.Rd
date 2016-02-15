@@ -5,7 +5,8 @@
 \title{plotOligoFreqs}
 \usage{
 plotOligoFreqs(freqs, x_pos = NULL, ylim = NULL,
-  xlab = "distance to position of interest", legend_nrow = 1, ...)
+  xlab = "distance to position of interest", ylab = "frequencies",
+  legend_nrow = 1, ...)
 }
 \arguments{
 \item{freqs}{(numeric matrix) oligonucleotide frequencies}

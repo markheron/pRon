@@ -29,7 +29,7 @@
 #' @param legend_nrow (integer) over how many rows should the legend be split
 #' @param ... further parameters for \code{\link{plot}}
 #' 
-plotOligoFreqs <- function(freqs, x_pos=NULL, ylim=NULL, xlab="distance to position of interest", legend_nrow=1, ...) {
+plotOligoFreqs <- function(freqs, x_pos=NULL, ylim=NULL, xlab="distance to position of interest", ylab="frequencies", legend_nrow=1, ...) {
   
   if(all(is.nan(freqs))) {
     freqs[] <- 0
@@ -45,7 +45,7 @@ plotOligoFreqs <- function(freqs, x_pos=NULL, ylim=NULL, xlab="distance to posit
   
   colors <- distinctive_colors(nrow(freqs))
   
-  plot(x_pos ,freqs[1,],typ='l',col=colors[1],ylim=ylim,xlab="", ylab="freq",xaxt='n', ...)
+  plot(x_pos, freqs[1,], typ='l', col=colors[1], ylim=ylim, ylab=ylab, xlab="", xaxt='n', ...)
   axis(side=1, pretty(x_pos, 10), mgp=c(3.5,1.5,0))
   title(xlab=xlab, mgp=c(3.5,1.5,0))
   for(i in 2:nrow(freqs)) {
