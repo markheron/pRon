@@ -8,9 +8,11 @@
 #' @export
 #' @param fastas (DNAStringSet) of same length fasta sequences that should be converted
 #' @param oligo_length (numeric) length of the oligo-nucleotides to use.
+#' @param method ("lookupTable") one of "lookupTable", "slidingView" and "memoryLimited" they are different implementations that have different speed/memory tradeoffs
+#' @param simplify (bool) in the case of a single fasta sequence, should a vector be returned instead of an matrix
 #' @return matrix of numeric representation of the fastas
 #' 
-fasta2num <- function (fastas, oligo_length, method="lookupTable") {
+fasta2num <- function (fastas, oligo_length, method="lookupTable", simplify=TRUE) {
   
   # could use chartr instead of this, but I have to strsplit them anyway, so this probably has similar speed
   base2num <- c("A"=1, "C"=2, "G"=3, "T"=4, "N"=NA)
@@ -39,6 +41,10 @@ fasta2num <- function (fastas, oligo_length, method="lookupTable") {
       seqnum_higher <- as.matrix( (seqnum_higher[-nrow(seqnum_higher),]-1)*4 + seqnum_zero[i:nrow(seqnum_zero),] )
     }
   }
+  if(simplify & ncol(seqnum_higher)==1) {
+    seqnum_higher <- as.vector(seqnum_higher)
+  }
+  
   return(seqnum_higher)
 }
 

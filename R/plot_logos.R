@@ -220,12 +220,17 @@ addLetter <- function(letters,which,x.pos,y.pos,ht,wt){
 ##' @export
 ##' 
 ##' @param pwm position weight matrix to create a Sequence Logo from
+##' @param background (numeric vector-4) background probabilities of the nucleotides for information gain computation default all=0.25
 ##' @param ytype (character) the type of y-axis to be used "information" (or "ic", "content") for information content (default); "relative" (or "gain") for information gain; "probabilities" (or anything else) for probabilities
 ##' @param xaxis (logical) should an x-axis be drawn or vector of labels for the xaxis (must be same length as pwm)
+##' @param xlim (numeric vector-2) default c(0,ncol(pwm)) see graphical parameters
 ##' @param yaxis (logical) should an y-axis be drawn
+##' @param ylim (numeric vector-2) default NULL see graphical parameters
+##' @param xlab (character) see graphical parameters
 ##' @param xfontsize (integer) size for x-axis text
 ##' @param yfontsize (integer) size for y-axis text
 ##' @param region in which to plot the figure, set by four margin values, set to \code{par("mar")} for default full plot
+##' @param ... further parameters to be passed through to dataViewport
 ##' 
 ##' @examples
 ##' pwm <- rbind( A=c( 0,  0, 15,  5,  5,  1, 0.1),
@@ -236,7 +241,7 @@ addLetter <- function(letters,which,x.pos,y.pos,ht,wt){
 ##' seqLogo(pwm, region=par("mar"))
 ##' 
 ##' @import grid
-seqLogo <- function(pwm, background=c("A"=0.25,"C"=0.25,"G"=0.25,"T"=0.25), ytype="information", xaxis=TRUE, yaxis=TRUE, ylim=NULL, xlab="Position", xfontsize=15, yfontsize=15, region=c(0,0,1,1), ...){
+seqLogo <- function(pwm, background=c("A"=0.25,"C"=0.25,"G"=0.25,"T"=0.25), ytype="information", xaxis=TRUE, xlim=c(0,ncol(pwm)), yaxis=TRUE, ylim=NULL, xlab="Position", xfontsize=15, yfontsize=15, region=c(0,0,1,1), ...){
   
   if (class(pwm) == "pwm"){
     pwm <- pwm@pwm
@@ -311,7 +316,7 @@ seqLogo <- function(pwm, background=c("A"=0.25,"C"=0.25,"G"=0.25,"T"=0.25), ytyp
   }
   
   pushViewport(plotViewport(region, ...))
-  pushViewport(dataViewport(xscale=c(0,ncol(pwm)),yscale=ylim,name="vp1", ...))
+  pushViewport(dataViewport(xscale=xlim,yscale=ylim,name="vp1", ...))
   
   grid.polygon(x=unit(c(0,ncol(pwm)+1,ncol(pwm)+1,0),"native"), y=unit(c(0,0,2,2),"native"),
                gp=gpar(fill="transparent",col="transparent"))
