@@ -15,6 +15,6 @@ get_genome_avg(genome_dir, oligo_length)
 the frequencies of the different oligomers
 }
 \description{
-get_genome_avg
+Computes the genome-wide oligomer frequencies.
 }
 

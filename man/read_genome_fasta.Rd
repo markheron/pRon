@@ -10,9 +10,9 @@ read_genome_fasta(genome_dir)
 \item{genome_dir}{the directory where the chromosome fasta files can be found}
 }
 \value{
-list of DNAStringSets
+DNAStringSet of the genome
 }
 \description{
-read_genome_fasta
+Load chromosome fasta files from a genome folder into a DNAStringSet object.
 }
 

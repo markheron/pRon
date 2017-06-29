@@ -19,9 +19,6 @@ cut_out_fasta_single(fasta, start, end, strand)
 DNAString of cut out fragment
 }
 \description{
-Cut's out single region from a single DNAString.
-}
-\author{
-Mark Heron
+Cuts out single region from a single DNAString.
 }
 

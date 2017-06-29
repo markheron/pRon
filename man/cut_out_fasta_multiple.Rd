@@ -23,9 +23,6 @@ cut_out_fasta_multiple(chr, pos, strand, size, order, genome_dir)
 DNAStringSet of cut out fragment
 }
 \description{
-Cut's out multiple regions from a genome (DNAStringSet).
-}
-\author{
-Mark Heron
+Cuts out multiple regions from a genome (DNAStringSet).
 }
 

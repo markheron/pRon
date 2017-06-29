@@ -18,12 +18,9 @@ cut_out_fasta_multiple_from_one_chr(pos, strand, size, order, chr_fasta)
 \item{chr_fasta}{DNAString(Set) of the chromosome from which to cut out the regions}
 }
 \value{
-DNAStringSet of cut out fragment
+DNAStringSet of cut out fragments
 }
 \description{
-Cut's out multiple regions from a single DNAString(Set) (i.e. typically chromosome).
-}
-\author{
-Mark Heron
+Cuts out multiple regions from a single DNAString(Set) (i.e. typically a chromosome).
 }
 

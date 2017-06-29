@@ -9,15 +9,12 @@ convertSparse2Complete_ff(sparse, lengths)
 \arguments{
 \item{sparse}{list of sparse representation matricies}
 
-\item{lengths}{list of chromosome lengths, names must match those of sparse}
+\item{lengths}{list of vector lengths, names must match those of \code{sparse}}
 }
 \value{
-list of ff vectors with complete representation of genomic tags
+list of ff vectors, which are the complete representation of each of \code{sparse} elements
 }
 \description{
-Converts sparse representation to complete representation as ff vectors of genomic tags.
-}
-\author{
-Mark Heron
+Converts sparse representation to complete ff vector representation for a list of data.
 }
 

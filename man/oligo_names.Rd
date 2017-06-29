@@ -10,10 +10,10 @@ oligo_names(oligo_length)
 \item{oligo_length}{(numeric) length of the oligo-nucleotides to use.}
 }
 \value{
-oligo-nucleotide name vector (character)
+(character vector) oligo-nucleotide name vector
 }
 \description{
-Creates an array with all possible oligomers of the length \code{mer_length}, sorted alphabetically.
+Creates an array with all possible oligo-nucleotides of the length \code{mer_length}, sorted alphabetically.
 }
 \examples{
 oligo_names(2)

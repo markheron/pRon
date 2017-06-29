@@ -1,6 +1,8 @@
 
 #' get_genome_avg
 #' 
+#' Computes the genome-wide oligomer frequencies.
+#' 
 #' @export
 #' @param genome_dir the directory where the chromosome fasta files can be found
 #' @param oligo_length (numeric) length of the oligo-nucleotides to cound the average frequencies for
@@ -22,9 +24,11 @@ get_genome_avg <- function(genome_dir, oligo_length) {
 
 #' read_genome_fasta
 #' 
+#' Load chromosome fasta files from a genome folder into a DNAStringSet object.
+#' 
 #' @export
 #' @param genome_dir the directory where the chromosome fasta files can be found
-#' @return list of DNAStringSets
+#' @return DNAStringSet of the genome
 #' 
 read_genome_fasta <- function(genome_dir) {
   
@@ -42,7 +46,8 @@ read_genome_fasta <- function(genome_dir) {
 
 ##' cut_out_fasta_multiple
 ##'
-##' Cut's out multiple regions from a genome (DNAStringSet).
+##' Cuts out multiple regions from a genome (DNAStringSet).
+##' 
 ##' @export
 ##' @param chr vector of chromosomes (DNAString) names where the sequences should be cutout from
 ##' @param pos vector of central position for cuting out the region
@@ -51,7 +56,7 @@ read_genome_fasta <- function(genome_dir) {
 ##' @param order what oligonucleotide order will later be used (to extend the cut region for symetry)
 ##' @param genome_dir the directory where the chromosome fasta files can be found
 ##' @return DNAStringSet of cut out fragment
-##' @author Mark Heron
+##' 
 cut_out_fasta_multiple <- function(chr, pos, strand, size, order, genome_dir) {
   
   genome <- read_genome_fasta(genome_dir)
@@ -69,14 +74,15 @@ cut_out_fasta_multiple <- function(chr, pos, strand, size, order, genome_dir) {
 
 ##' cut_out_fasta_single
 ##' 
-##' Cut's out single region from a single DNAString.
+##' Cuts out single region from a single DNAString.
+##' 
 ##' @export
 ##' @param fasta DNAString to cut out from
 ##' @param start of region to cut out
 ##' @param end of region to cut out
 ##' @param strand cut out forward or reverse complement
 ##' @return DNAString of cut out fragment
-##' @author Mark Heron
+##' 
 cut_out_fasta_single <- function(fasta, start, end, strand) {
   
   fasta_seq <- subseq(fasta, start, end)
@@ -89,15 +95,16 @@ cut_out_fasta_single <- function(fasta, start, end, strand) {
 
 ##' cut_out_fasta_multiple_from_one_chr
 ##'
-##' Cut's out multiple regions from a single DNAString(Set) (i.e. typically chromosome).
+##' Cuts out multiple regions from a single DNAString(Set) (i.e. typically a chromosome).
+##' 
 ##' @export
 ##' @param pos vector of central position for cuting out the region
 ##' @param strand vector of "+"/"-" to specify if the forward or the reverse complement sequence shall be used
 ##' @param size region size before and after the positions to cut out
 ##' @param order what oligonucleotide order will later be used (to extend the cut region for symetry)
 ##' @param chr_fasta DNAString(Set) of the chromosome from which to cut out the regions
-##' @return DNAStringSet of cut out fragment
-##' @author Mark Heron
+##' @return DNAStringSet of cut out fragments
+##' 
 cut_out_fasta_multiple_from_one_chr <- function(pos, strand, size, order, chr_fasta) {
   
   seqs <- DNAStringSet(rep("",length(pos)))
@@ -115,12 +122,13 @@ cut_out_fasta_multiple_from_one_chr <- function(pos, strand, size, order, chr_fa
 
 ##' convertSparse2Complete_ff
 ##'
-##' Converts sparse representation to complete representation as ff vectors of genomic tags.
+##' Converts sparse representation to complete ff vector representation for a list of data.
+##' 
 ##' @export
 ##' @param sparse list of sparse representation matricies
-##' @param lengths list of chromosome lengths, names must match those of sparse
-##' @return list of ff vectors with complete representation of genomic tags
-##' @author Mark Heron
+##' @param lengths list of vector lengths, names must match those of \code{sparse}
+##' @return list of ff vectors, which are the complete representation of each of \code{sparse} elements
+##' 
 convertSparse2Complete_ff <- function(sparse, lengths) {
   
   complete <- list()
@@ -137,12 +145,13 @@ convertSparse2Complete_ff <- function(sparse, lengths) {
 
 ##' getRunningWindowCG
 ##'
-##' Computes a running window cg\% for a DNAStringSet
+##' Computes a running window C+G\% for a DNAStringSet.
+##' 
 ##' @export
-##' @param fastas (DNAStringSet) for which to calculate the running window cg\%
+##' @param fastas (DNAStringSet) for which to calculate the running window C+G\%
 ##' @param half_window_size how much to extend the window in either direction
-##' @return list of ff vectors with running cg\%
-##' @author Mark Heron
+##' @return list of ff vectors that contain the running C+G\%
+##' 
 getRunningWindowCG <- function(fastas, half_window_size=73) {
   
   genome_list <- list()

@@ -35,7 +35,7 @@ seqLogo(pwm, background = c(A = 0.25, C = 0.25, G = 0.25, T = 0.25),
 \item{...}{further parameters to be passed through to dataViewport}
 }
 \description{
-plot a sequence logo
+Plot a PWM sequence logo.
 }
 \examples{
 pwm <- rbind( A=c( 0,  0, 15,  5,  5,  1, 0.1),

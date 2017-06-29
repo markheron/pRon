@@ -7,17 +7,14 @@
 getRunningWindowCG(fastas, half_window_size = 73)
 }
 \arguments{
-\item{fastas}{(DNAStringSet) for which to calculate the running window cg\%}
+\item{fastas}{(DNAStringSet) for which to calculate the running window C+G\%}
 
 \item{half_window_size}{how much to extend the window in either direction}
 }
 \value{
-list of ff vectors with running cg\%
+list of ff vectors that contain the running C+G\%
 }
 \description{
-Computes a running window cg\% for a DNAStringSet
-}
-\author{
-Mark Heron
+Computes a running window C+G\% for a DNAStringSet.
 }
 

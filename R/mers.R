@@ -1,11 +1,11 @@
 
 #' create oligo-nucleotide names
 #'
-#' Creates an array with all possible oligomers of the length \code{mer_length}, sorted alphabetically.
+#' Creates an array with all possible oligo-nucleotides of the length \code{mer_length}, sorted alphabetically.
 #' 
 #' @export
 #' @param oligo_length (numeric) length of the oligo-nucleotides to use.
-#' @return oligo-nucleotide name vector (character)
+#' @return (character vector) oligo-nucleotide name vector
 #' @examples
 #' oligo_names(2)
 #' 
@@ -21,9 +21,11 @@ oligo_names <- function(oligo_length) {
 
 #' complementary_oligo_positions
 #'
+#' Creates a position reference to the reverse complementary oligo-nucleotides in an alphabetically sorting.
+#'
 #' @export
 #' @param oligo_length (numeric) length of the oligo-nucleotides to use.
-#' @return position of the matching reverse complement oligo-nucleotides
+#' @return (numeric vector) position of the matching reverse complement oligo-nucleotides
 #' @examples
 #' complementary_oligo_positions(2)
 #' 

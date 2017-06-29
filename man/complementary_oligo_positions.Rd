@@ -10,10 +10,10 @@ complementary_oligo_positions(oligo_length)
 \item{oligo_length}{(numeric) length of the oligo-nucleotides to use.}
 }
 \value{
-position of the matching reverse complement oligo-nucleotides
+(numeric vector) position of the matching reverse complement oligo-nucleotides
 }
 \description{
-complementary_oligo_positions
+Creates a position reference to the reverse complementary oligo-nucleotides in an alphabetically sorting.
 }
 \examples{
 complementary_oligo_positions(2)

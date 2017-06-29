@@ -7,9 +7,9 @@
 num2weightedfreq(seqnum, weights, oligo_length)
 }
 \arguments{
-\item{seqnum}{(numeric matrix) oligo-nucleotide-coded representation of fasta sequences}
+\item{seqnum}{(numeric matrix) numerically encoded oligo-nucleotide representation of DNA sequences}
 
-\item{weights}{of the different fasta sequences}
+\item{weights}{(numeric) to be given to the fasta sequences (should have length matching \code{ncol(seqnum)})}
 
 \item{oligo_length}{(integer) length of the oligonucleotide-coding used (order+1)}
 }
@@ -17,6 +17,6 @@ num2weightedfreq(seqnum, weights, oligo_length)
 matrix of weighted oligonucleotide frequencies
 }
 \description{
-Calculates the weighted mere frequencies given a oligonucleotide-coded representation matrix
+Calculates the weighted oligo-nucleotide frequencies given a numerically encoded matrix representation.
 }
 

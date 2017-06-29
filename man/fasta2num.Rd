@@ -4,19 +4,19 @@
 \alias{fasta2num}
 \title{fasta2num}
 \usage{
-fasta2num(fastas, oligo_length, method = "as.integer", simplify = TRUE)
+fasta2num(fastas, oligo_length, method = "lookupTable", simplify = TRUE)
 }
 \arguments{
 \item{fastas}{(DNAStringSet) of same length fasta sequences that should be converted (single DNAString also possible)}
 
 \item{oligo_length}{(numeric) length of the oligo-nucleotides to use.}
 
-\item{method}{("as.integer") one of"as.integer", "lookupTable", "slidingView" and "memoryLimited" they are different implementations that have different speed/memory tradeoffs}
+\item{method}{("lookupTable") one of"as.integer", "lookupTable", "slidingView" and "memoryLimited" they are different implementations that have different speed/memory tradeoffs}
 
-\item{simplify}{(bool) in the case of a single fasta sequence, should a vector be returned instead of an matrix}
+\item{simplify}{(bool) in the case of a single fasta sequence, should a vector be returned instead of a matrix}
 }
 \value{
-matrix of numeric representation of the fastas
+matrix (or vector) of numeric representation of the fastas
 }
 \description{
 Transforms a DNAStringSet with equal length objects into a matrix of numeric representation of the oligo-nucleotides.

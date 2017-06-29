@@ -2,12 +2,13 @@
 
 ##' fasta2sparse_boolean
 ##'
-##' Creates sparse coding matrix of a fasta sequence.
+##' Creates sparse encoded matrix of a DNA sequence.
+##' 
 ##' @export
-##' @param fasta DNAString
-##' @param oligo_length oligonucleotide length to code the sequence in
-##' @return sparse representation matrix of the DNAString
-##' @author Mark Heron
+##' @param fasta (DNAString) sequence to encode
+##' @param oligo_length (integer) oligo-nucleotide length to encode the sequence in
+##' @return (boolean matrix) sparse encoding of the DNAString, columns=positions, rows=oligo-nucleotides
+##' 
 fasta2sparse_boolean <- function(fasta, oligo_length) {
   
   fasta_num <- fasta2num(fasta, oligo_length)
@@ -17,7 +18,6 @@ fasta2sparse_boolean <- function(fasta, oligo_length) {
   for(i in 1:nrow(fasta_sparse)) {
     fasta_sparse[i,] <- fasta_num==i
   }
-  #fasta_sparse[is.na(fasta_sparse)] <- FALSE
   
   return( fasta_sparse )
 }
@@ -27,12 +27,12 @@ fasta2sparse_boolean <- function(fasta, oligo_length) {
 
 ##' fasta2sparse_boolean_ff
 ##'
-##' Creates sparse coding ff object of a fasta sequence.
+##' Creates sparse encoding ff object of a DNA sequence.
+##' 
 ##' @export
-##' @param fasta DNAString
-##' @param oligo_length oligonucleotide length to code the sequence in
-##' @return sparse ff.matrix representation of the DNAString
-##' @author Mark Heron
+##' @inheritParams fasta2sparse_boolean 
+##' @return (boolean ff.matrix) sparse encoding of the DNAString, columns=positions, rows=oligo-nucleotides
+##' 
 fasta2sparse_boolean_ff <- function(fasta, oligo_length) {
   
   fasta_num <- fasta2num(fasta, oligo_length)

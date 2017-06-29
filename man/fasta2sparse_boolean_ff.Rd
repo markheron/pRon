@@ -7,17 +7,14 @@
 fasta2sparse_boolean_ff(fasta, oligo_length)
 }
 \arguments{
-\item{fasta}{DNAString}
+\item{fasta}{(DNAString) sequence to encode}
 
-\item{oligo_length}{oligonucleotide length to code the sequence in}
+\item{oligo_length}{(integer) oligo-nucleotide length to encode the sequence in}
 }
 \value{
-sparse ff.matrix representation of the DNAString
+(boolean ff.matrix) sparse encoding of the DNAString, columns=positions, rows=oligo-nucleotides
 }
 \description{
-Creates sparse coding ff object of a fasta sequence.
-}
-\author{
-Mark Heron
+Creates sparse encoding ff object of a DNA sequence.
 }
 

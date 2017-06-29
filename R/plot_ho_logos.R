@@ -1,8 +1,16 @@
-################################################################################
-#
-# Documentations
+# Functions to plot a DNA motif
 # 
-################################################################################
+# Originally adapted by Holger from the seqLogo package of Bioconductor.
+# Then adapted by Matthias for higher-order BaMM logo.
+#
+# Copy to test code refactoring and possibly incorporation into the pRon package.
+# 
+# name plot_logos
+# author Holger Hartmann
+# author Matthias Siebert
+# author Mark Heron
+NULL
+
 
 # Plot higher-order BaMM logo
 # using file with BaMM probabilities as obtained from BaMM!motif

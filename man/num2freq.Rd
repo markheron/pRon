@@ -7,7 +7,7 @@
 num2freq(seqnum, oligo_length)
 }
 \arguments{
-\item{seqnum}{(numeric matrix) oligo-nucleotide-coded representation of fasta sequences}
+\item{seqnum}{(numeric matrix) numerically encoded oligo-nucleotide representation of DNA sequences}
 
 \item{oligo_length}{(integer) length of the oligonucleotide-coding used (order+1)}
 }
@@ -15,6 +15,6 @@ num2freq(seqnum, oligo_length)
 matrix of oligonucleotide frequencies
 }
 \description{
-Calculates the mere frequencies given a oligo-nucleotide-coded representation matrix
+Calculates the oligo-nucleotide frequencies given a numerically encoded matrix representation.
 }
 
