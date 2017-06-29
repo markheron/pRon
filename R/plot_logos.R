@@ -1,32 +1,59 @@
-## Functions to plot a DNA motif
-## 
-## Originally adapted by Holger from the seqLogo package of Bioconductor
-## 
-## name plot_logos
-## author Holger Hartmann
-## author Mark Heron
+##' Functions to plot a DNA motif
+##' 
+##' Originally adapted by Holger from the seqLogo package of Bioconductor
+##' 
+##' @name plot_logos
+##' @author Holger Hartmann
+##' @author Mark Heron
 NULL
 
 
-## get information content per position for pem
+
+#' Reverse complement a PWM
+#'
+#' Create the reverse complement PWM
+#'
+#' @export
+#' @param pwm (numeric matrix) position weight matrix
+#' @return (numeric matrix) reverse complement position weight matrix
+#'
+revComp <- function(pwm){
+  reverse_pwm <- pwm # for correct col and row names
+  reverse_pwm[] <- pwm[nrow(pwm):1, ncol(pwm):1]
+  return(reverse_pwm)
+}
+
+
+#' PWM information content
+#' 
+#' Compute the information content per position for a PWM.
+#'
+#' @param pwm (numeric matrix) position weight matrix
+#' @return (numeric vector) of the information content per position
+#' 
 pwm2ic <- function(pwm) {
   
   ic <- 2 + colSums( pwm*log2(pwm), na.rm=TRUE) #na.rm=TRUE handles the case of 0 counts
   return(ic)
 }
 
-## get information gain per position for pem
+
+## get information gain per position for pwm
+
+#' PWM information gain
+#' 
+#' Compute the information gain per position for a PWM.
+#'
+#' @inheritParams pwm2ic
+#' @param bg (numeric vector) background frequencies of the nucleotides
+#' @return (numeric vector) of the information content per position
+#' 
 pwm2ig <- function(pwm, bg) {
   
   rc <- colSums( pwm*log2(pwm/bg), na.rm=TRUE) #na.rm=TRUE handles the case of 0 counts
   return(rc)
 }
 
-######################
-##
-## plot sequence logo
-##
-######################
 
 letterA <- function(x.pos,y.pos,ht,wt,id=NULL){
   
@@ -50,10 +77,10 @@ letterA <- function(x.pos,y.pos,ht,wt,id=NULL){
   fill <- c("#008000","#008000")
   col <- c("#008000","#008000")
   
-  list(x=x,y=y,id=id,fill=fill,col=col)
+  return(list(x=x,y=y,id=id,fill=fill,col=col))
 }
 
-## T
+
 letterT <- function(x.pos,y.pos,ht,wt,id=NULL){
   
   x <- c(0,10,10,6,6,4,4,0)
@@ -73,10 +100,10 @@ letterT <- function(x.pos,y.pos,ht,wt,id=NULL){
   fill <- "#FF0000"
   col <-  "#FF0000"
   
-  list(x=x,y=y,id=id,fill=fill,col=col)
+  return(list(x=x,y=y,id=id,fill=fill,col=col))
 }
 
-## C
+
 letterC <- function(x.pos,y.pos,ht,wt,id=NULL){
   angle1 <- seq(0.3+pi/2,pi,length=100)
   angle2 <- seq(pi,1.5*pi,length=100)
@@ -121,11 +148,10 @@ letterC <- function(x.pos,y.pos,ht,wt,id=NULL){
   fill <- "#0000FF"
   col <- "#0000FF"
   
-  list(x=x,y=y,id=id,fill=fill,col=col)
+  return(list(x=x,y=y,id=id,fill=fill,col=col))
 }
 
 
-## G
 letterG <- function(x.pos,y.pos,ht,wt,id=NULL){
   angle1 <- seq(0.3+pi/2,pi,length=100)
   angle2 <- seq(pi,1.5*pi,length=100)
@@ -165,8 +191,6 @@ letterG <- function(x.pos,y.pos,ht,wt,id=NULL){
   x.add <- c(r1,0.5,0.5,r1-0.2,r1-0.2,r1,r1)
   y.add <- c(h1,h1,h1-0.1,h1-0.1,0,0,h1)
   
-  
-  
   if (is.null(id)){
     id <- c(rep(1,length(x)),rep(2,length(x.add)))
   }else{
@@ -183,25 +207,19 @@ letterG <- function(x.pos,y.pos,ht,wt,id=NULL){
   fill <- c("#FFA500","#FFA500")
   col  <- c("#FFA500","#FFA500")
   
-  list(x=x,y=y,id=id,fill=fill,col=col)
-  
+  return(list(x=x,y=y,id=id,fill=fill,col=col))
 }
-
 
 
 addLetter <- function(letters,which,x.pos,y.pos,ht,wt){
   
-  if (which == "A"){
-    letter <- letterA(x.pos,y.pos,ht,wt)
-  }else if (which == "C"){
-    letter <- letterC(x.pos,y.pos,ht,wt)
-  }else if (which == "G"){
-    letter <- letterG(x.pos,y.pos,ht,wt)
-  }else if (which == "T"){
-    letter <- letterT(x.pos,y.pos,ht,wt)
-  }else{
-    stop("which must be one of A,C,G,T")
-  }
+  letter <- switch(which,
+         'A' = letterA(x.pos,y.pos,ht,wt),
+         'C' = letterC(x.pos,y.pos,ht,wt),
+         'G' = letterG(x.pos,y.pos,ht,wt),
+         'T' = letterT(x.pos,y.pos,ht,wt),
+         stop("which must be one of A,C,G,T")
+         )
   
   letters$x <- c(letters$x,letter$x)
   letters$y <- c(letters$y,letter$y)
@@ -210,12 +228,15 @@ addLetter <- function(letters,which,x.pos,y.pos,ht,wt){
   letters$id <- c(letters$id,lastID+letter$id)
   letters$fill <- c(letters$fill,letter$fill)
   letters$col <- c(letters$col,letter$col)
-  letters
+  return(letters)
 }
+
+
+
 
 ##' seqLogo
 ##' 
-##' plot a sequence logo
+##' Plot a PWM sequence logo.
 ##' 
 ##' @export
 ##' 
@@ -337,11 +358,5 @@ seqLogo <- function(pwm, background=c("A"=0.25,"C"=0.25,"G"=0.25,"T"=0.25), ytyp
   popViewport()
   popViewport()
   par(ask=FALSE)
-}
-
-revComp <- function(pwm){
-  reverse_pwm <- pwm # for correct col and row names
-  reverse_pwm[] <- pwm[nrow(pwm):1, ncol(pwm):1]
-  return(reverse_pwm)
 }
 
