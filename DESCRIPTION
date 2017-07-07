@@ -11,10 +11,11 @@ License: GPL-3
 Imports:
     Biostrings,
     ff,
-    ffbase,
-    maRs
+    maRs,
+    XVector
 Suggests:
     knitr,
-    microbenchmark
+    microbenchmark,
+    testthat
 VignetteBuilder: knitr
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

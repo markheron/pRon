@@ -37,7 +37,7 @@ fasta2sparse_boolean_ff <- function(fasta, oligo_length) {
   
   fasta_num <- fasta2num(fasta, oligo_length)
   
-  fasta_sparse <- ff(FALSE, vmode="boolean", dim=c(length(oligo_names(oligo_length)), length(fasta_num)))
+  fasta_sparse <- ff::ff(FALSE, vmode="boolean", dim=c(length(oligo_names(oligo_length)), length(fasta_num)))
   
   for(i in 1:nrow(fasta_sparse)) {
     fasta_sparse[i,] <- fasta_num==i

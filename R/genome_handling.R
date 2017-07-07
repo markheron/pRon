@@ -12,9 +12,9 @@ get_genome_avg <- function(genome_dir, oligo_length) {
   
   oligo_counts <- rep(0, 4^oligo_length)
   
-  for(chr in get_files(genome_dir)) {
+  for(chr in maRs::get_files(genome_dir)) {
     
-    sequence_as_num <- fasta2num( readDNAStringSet(paste(genome_dir,chr,sep="")), oligo_length)
+    sequence_as_num <- fasta2num( Biostrings::readDNAStringSet(paste(genome_dir,chr,sep="")), oligo_length)
     chr_counts <- table(sequence_as_num[sequence_as_num > 0])
     oligo_counts <- oligo_counts + chr_counts
   }
@@ -34,10 +34,10 @@ read_genome_fasta <- function(genome_dir) {
   
   genome <- list()
   
-  for(chr in get_files(genome_dir)) {
-    genome[sub("\\..*", "", chr)] <- readDNAStringSet(paste(genome_dir,chr,sep=""))
+  for(chr in maRs::get_files(genome_dir)) {
+    genome[sub("\\..*", "", chr)] <- Biostrings::readDNAStringSet(paste(genome_dir,chr,sep=""))
   }
-  genome <- DNAStringSet( lapply(genome, function (x) x[[1]]))
+  genome <- Biostrings::DNAStringSet( lapply(genome, function (x) x[[1]]))
   return(genome)
 }
 
@@ -61,7 +61,7 @@ cut_out_fasta_multiple <- function(chr, pos, strand, size, order, genome_dir) {
   
   genome <- read_genome_fasta(genome_dir)
   
-  seqs <- DNAStringSet(rep("",length(pos)))
+  seqs <- Biostrings::DNAStringSet(rep("",length(pos)))
   
   for(i in 1:length(seqs)) {
     
@@ -85,9 +85,9 @@ cut_out_fasta_multiple <- function(chr, pos, strand, size, order, genome_dir) {
 ##' 
 cut_out_fasta_single <- function(fasta, start, end, strand) {
   
-  fasta_seq <- subseq(fasta, start, end)
+  fasta_seq <- XVector::subseq(fasta, start, end)
   if(strand == "-") {
-    fasta_seq <- reverseComplement(fasta_seq)
+    fasta_seq <- Biostrings::reverseComplement(fasta_seq)
   }
   return(fasta_seq)
 }
@@ -107,11 +107,11 @@ cut_out_fasta_single <- function(fasta, start, end, strand) {
 ##' 
 cut_out_fasta_multiple_from_one_chr <- function(pos, strand, size, order, chr_fasta) {
   
-  seqs <- DNAStringSet(rep("",length(pos)))
+  seqs <- Biostrings::DNAStringSet(rep("",length(pos)))
   
   for(i in 1:length(seqs)) {
     
-    seqs <- subseq(rep(DNAStringSet(chr_fasta), length(pos)), start=pos-size -((strand=="-")*order), end=pos+size +((strand=="+")*order))
+    seqs <- XVector::subseq(rep(Biostrings::DNAStringSet(chr_fasta), length(pos)), start=pos-size -((strand=="-")*order), end=pos+size +((strand=="+")*order))
     
   }
   names(seqs) <- ""
@@ -134,7 +134,7 @@ convertSparse2Complete_ff <- function(sparse, lengths) {
   complete <- list()
   
   for(chr in names(sparse)) {
-    complete[[chr]] <- ff(0, length=lengths[[chr]])
+    complete[[chr]] <- ff::ff(0, length=lengths[[chr]])
     complete[[chr]][sparse[[chr]][,1]] <- sparse[[chr]][,2]
   }
   invisible(complete)
@@ -158,7 +158,7 @@ getRunningWindowCG <- function(fastas, half_window_size=73) {
   for(chr in names(fastas)) {
     seqnum <- fasta2num(fastas[chr],1)
     cg <- as.numeric((seqnum == 2) | (seqnum == 3))
-    genome_list[[chr]] <-  as.ff(smear(cg, from=-half_window_size, to=half_window_size)/(2*half_window_size+1))
+    genome_list[[chr]] <-  ff::as.ff(maRs::smear(cg, from=-half_window_size, to=half_window_size)/(2*half_window_size+1))
   }
   invisible(genome_list)
 }

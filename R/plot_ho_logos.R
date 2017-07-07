@@ -4,6 +4,7 @@
 # Then adapted by Matthias for higher-order BaMM logo.
 #
 # Copy to test code refactoring and possibly incorporation into the pRon package.
+# ! Excluded from the build at the moment, see .Rbuildignore !
 # 
 # name plot_logos
 # author Holger Hartmann

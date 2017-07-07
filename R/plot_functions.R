@@ -34,7 +34,7 @@ plotOligoFreqs <- function(freqs, x_pos=NULL, ylim=NULL, xlab="distance to posit
       warning("length of col doesn't match rows of freqs!")
     } 
   } else {
-    colours <- distinctive_colors(nrow(freqs))
+    colours <- maRs::distinctive_colors(nrow(freqs))
   }
   
   plot(x_pos, freqs[1,], typ='l', col=colours[1], ylim=ylim, ylab=ylab, xlab="", xaxt='n', ...)

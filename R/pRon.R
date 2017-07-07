@@ -6,8 +6,4 @@
 ##' @author Mark Heron
 ##' @docType package
 ##' 
-##' @import Biostrings
-##' @import ff
-##' @import ffbase
-##' @import maRs
 NULL

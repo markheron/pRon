@@ -26,7 +26,7 @@ fasta2num <- function (fastas, oligo_length, method="lookupTable", simplify=TRUE
     seqnum_zero <- sapply(fastas, function(x) xinteger2num[as.integer(x)])
     
   } else if(method == "slidingView") {
-    seqnum_zero <- sapply(fastas, function (x) colSums(t(letterFrequencyInSlidingView(x, 1, c("A","C","G","T")))*(1:4)))
+    seqnum_zero <- sapply(fastas, function (x) colSums(t(Biostrings::letterFrequencyInSlidingView(x, 1, c("A","C","G","T")))*(1:4)))
     
   } else if (method == "lookupTable") { # previous line implementation is faster, see benchmark  (on human sized fasta's this seems faster and has less memory footprint)
     seqnum_zero <- sapply(fastas, function (fasta) base2num[strsplit(as.character(fasta),"")[[1]]])
