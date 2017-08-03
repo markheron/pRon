@@ -19,4 +19,3 @@ matrix of weighted oligonucleotide frequencies
 \description{
 Calculates the weighted oligo-nucleotide frequencies given a numerically encoded matrix representation.
 }
-

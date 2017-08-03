@@ -10,4 +10,3 @@ A selection functions to help handle oligo-nucleotides (mers), including creatio
 \author{
 Mark Heron
 }
-

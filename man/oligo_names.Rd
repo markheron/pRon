@@ -19,4 +19,3 @@ Creates an array with all possible oligo-nucleotides of the length \code{mer_len
 oligo_names(2)
 
 }
-

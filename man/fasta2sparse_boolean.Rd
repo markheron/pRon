@@ -17,4 +17,3 @@ fasta2sparse_boolean(fasta, oligo_length)
 \description{
 Creates sparse encoded matrix of a DNA sequence.
 }
-

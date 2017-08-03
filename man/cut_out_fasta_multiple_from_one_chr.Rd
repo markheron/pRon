@@ -23,4 +23,3 @@ DNAStringSet of cut out fragments
 \description{
 Cuts out multiple regions from a single DNAString(Set) (i.e. typically a chromosome).
 }
-

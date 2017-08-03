@@ -21,4 +21,3 @@ DNAString of cut out fragment
 \description{
 Cuts out single region from a single DNAString.
 }
-

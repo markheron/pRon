@@ -17,4 +17,3 @@ Transforms a DNAStringSet into a list of numeric representation of the mono-nucl
 Any mono-nucleotide that isn't A,C,G or T is represented as **NA**.
 This is a streamlined version of \code{\link{fasta2num}} for mono-nucleotides that additionally allows varying sequence lengths.
 }
-

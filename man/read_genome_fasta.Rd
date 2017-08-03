@@ -15,4 +15,3 @@ DNAStringSet of the genome
 \description{
 Load chromosome fasta files from a genome folder into a DNAStringSet object.
 }
-

@@ -17,4 +17,3 @@ the frequencies of the different oligomers
 \description{
 Computes the genome-wide oligomer frequencies.
 }
-

@@ -22,4 +22,3 @@ matrix (or vector) of numeric representation of the fastas
 Transforms a DNAStringSet with equal length objects into a matrix of numeric representation of the oligo-nucleotides.
 Any oligo-nucleotide with a letter differing from A,C,G,T is represented as **NA**
 }
-

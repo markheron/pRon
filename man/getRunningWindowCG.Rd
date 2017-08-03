@@ -17,4 +17,3 @@ list of ff vectors that contain the running C+G\%
 \description{
 Computes a running window C+G\% for a DNAStringSet.
 }
-

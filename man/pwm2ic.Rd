@@ -15,4 +15,3 @@ pwm2ic(pwm)
 \description{
 Compute the information content per position for a PWM.
 }
-

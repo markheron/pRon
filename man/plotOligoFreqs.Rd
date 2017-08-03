@@ -28,4 +28,3 @@ plotOligoFreqs(freqs, x_pos = NULL, ylim = NULL,
 \description{
 Plots oligo-nucleotide frequencies over a region as lines.
 }
-

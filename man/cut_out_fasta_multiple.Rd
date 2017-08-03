@@ -25,4 +25,3 @@ DNAStringSet of cut out fragment
 \description{
 Cuts out multiple regions from a genome (DNAStringSet).
 }
-

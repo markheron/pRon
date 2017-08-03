@@ -17,4 +17,3 @@ list of ff vectors, which are the complete representation of each of \code{spars
 \description{
 Converts sparse representation to complete ff vector representation for a list of data.
 }
-

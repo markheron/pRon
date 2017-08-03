@@ -17,4 +17,3 @@ matrix of oligonucleotide frequencies
 \description{
 Calculates the oligo-nucleotide frequencies given a numerically encoded matrix representation.
 }
-

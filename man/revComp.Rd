@@ -15,4 +15,3 @@ revComp(pwm)
 \description{
 Create the reverse complement PWM
 }
-

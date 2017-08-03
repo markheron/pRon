@@ -17,4 +17,3 @@ pwm2ig(pwm, bg)
 \description{
 Compute the information gain per position for a PWM.
 }
-

@@ -46,4 +46,3 @@ pwm <- rbind( A=c( 0,  0, 15,  5,  5,  1, 0.1),
 seqLogo(pwm, region=par("mar"))
 
 }
-

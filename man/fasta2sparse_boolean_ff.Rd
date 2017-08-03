@@ -17,4 +17,3 @@ fasta2sparse_boolean_ff(fasta, oligo_length)
 \description{
 Creates sparse encoding ff object of a DNA sequence.
 }
-

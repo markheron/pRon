@@ -35,7 +35,7 @@ read_genome_fasta <- function(genome_dir) {
   genome <- list()
   
   for(chr in maRs::get_files(genome_dir)) {
-    genome[sub("\\..*", "", chr)] <- Biostrings::readDNAStringSet(paste(genome_dir,chr,sep=""))
+    genome[[sub("\\..*", "", chr)]] <- Biostrings::readDNAStringSet(paste(genome_dir,chr,sep=""))
   }
   genome <- Biostrings::DNAStringSet( lapply(genome, function (x) x[[1]]))
   return(genome)
