@@ -63,9 +63,9 @@ cut_out_fasta_multiple <- function(chr, pos, strand, size, order, genome_dir) {
   
   seqs <- Biostrings::DNAStringSet(rep("",length(pos)))
   
-  for(i in 1:length(seqs)) {
+  for(i in seq_along(seqs)) {
     
-    seqs[i] <- cut_out_fasta_single(genome[[chr[i]]], start=pos[i]-size -((strand[i]=="-")*order), end=pos[i]+size +((strand[i]=="+")*order), strand[i] )
+    seqs[[i]] <- cut_out_fasta_single(genome[[chr[i]]], start=pos[i]-size -((strand[i]=="-")*order), end=pos[i]+size +((strand[i]=="+")*order), strand[i] )
   }
   names(seqs) <- ""
   return(seqs)
