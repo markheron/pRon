@@ -337,13 +337,20 @@ seqLogo <- function(pwm, background=c("A"=0.25,"C"=0.25,"G"=0.25,"T"=0.25), ytyp
   }
   
   pushViewport(plotViewport(region, ...))
-  pushViewport(dataViewport(xscale=xlim,yscale=ylim,name="vp1", ...))
+  
+  tmp_dataviewport <- dataViewport(xscale=xlim,yscale=ylim,name="vp1", ...)
+  
+  pushViewport(tmp_dataviewport)
   
   grid.polygon(x=unit(c(0,ncol(pwm)+1,ncol(pwm)+1,0),"native"), y=unit(c(0,0,2,2),"native"),
                gp=gpar(fill="transparent",col="transparent"))
   grid.polygon(x=unit(letters$x,"native"), y=unit(letters$y,"native"),
                id=letters$id,
                gp=gpar(fill=letters$fill,col=letters$col,lwd=1))
+  
+  popViewport()
+  pushViewport(tmp_dataviewport)
+  
   if(length(xaxis) == ncol(pwm) && length(xaxis) > 1) {
     grid.xaxis(at=seq(0.5,ncol(pwm)-0.5),label=xaxis, gp=gpar(fontsize=xfontsize))
     grid.text(xlab,y=unit(-3,"lines"), gp=gpar(fontsize=xfontsize))
@@ -356,7 +363,8 @@ seqLogo <- function(pwm, background=c("A"=0.25,"C"=0.25,"G"=0.25,"T"=0.25), ytyp
     grid.text(ylab,x=unit(-3,"lines"),rot=90, gp=gpar(fontsize=yfontsize))
   }
   popViewport()
+  
   popViewport()
-  par(ask=FALSE)
+  
 }
 
