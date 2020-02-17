@@ -4,7 +4,8 @@
 \alias{fasta2num}
 \title{fasta2num}
 \usage{
-fasta2num(fastas, oligo_length, method = "lookupTable", simplify = TRUE)
+fasta2num(fastas, oligo_length, method = "lookupTable",
+  simplify = TRUE)
 }
 \arguments{
 \item{fastas}{(DNAStringSet) of same length fasta sequences that should be converted (single DNAString also possible)}
